@@ -11,7 +11,7 @@ Masuk ke dalam direktori projek, kemudian masukkan perintah `npm start` untuk me
 Aplikasi akan berjalan pada [http://localhost:3000](http://localhost:3000) di browser.
 
 
-## Contoh Penyelesaian
+## Contoh Penggunaan
 ### 1. A(-5, 5) dan B(1, 2) [Algoritma Dasar]
 ![Nomor 1 Tabel](https://github.com/user-attachments/assets/9d4c18a1-3d30-48ab-88d2-d52acb362202)
 ![Nomor 1 Canvas](https://github.com/user-attachments/assets/6695b709-796f-478e-a8e8-0650fff346d7)

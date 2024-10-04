@@ -4,10 +4,12 @@ Aplikasi ini merupakan kalkulator berbasis website yang dapat menentukan koordin
 
 Aplikasi ini dikembangkan menggunakan React JS dan Material UI.
 
+
 ## Cara Menjalankan Aplikasi
 
 Masuk ke dalam direktori projek, kemudian masukkan perintah `npm start` untuk menjalankan aplikasi. <br/>
 Aplikasi akan berjalan pada [http://localhost:3000](http://localhost:3000) di browser.
+
 
 ## Contoh Penyelesaian
 ### 1. A(-5, 5) dan B(1, 2) [Algoritma Dasar]

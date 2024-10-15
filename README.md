@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+# Algoritma Penggambaran Garis
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplikasi ini merupakan kalkulator berbasis website yang dapat menentukan koordinat titik-titik digital suatu garis yang dibentuk oleh dua titik dengan menggunakan algoritma dasar atau DDA (*Digital Differential Analyzer*).
 
-## Available Scripts
+Aplikasi ini dikembangkan menggunakan React JS dan Material UI.
 
-In the project directory, you can run:
 
-### `npm start`
+## Cara Menjalankan Aplikasi
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Masuk ke dalam direktori projek, kemudian masukkan perintah `npm start` untuk menjalankan aplikasi. <br/>
+Aplikasi akan berjalan pada [http://localhost:3000](http://localhost:3000) di browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Contoh Penggunaan
+### 1. A(-5, 5) dan B(1, 2) [Algoritma Dasar]
+![Nomor 1 Tabel](https://github.com/user-attachments/assets/9d4c18a1-3d30-48ab-88d2-d52acb362202)
+![Nomor 1 Canvas](https://github.com/user-attachments/assets/6695b709-796f-478e-a8e8-0650fff346d7)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. A(4, 3) dan B(8, -2) [Algoritma Dasar]
+![Nomor 2 Tabel](https://github.com/user-attachments/assets/263813e2-4607-4e81-9608-4172f89e267f)
+![Nomor 2 Canvas](https://github.com/user-attachments/assets/ceafdd26-194d-4ac0-9cab-82a7743ea773)
 
-### `npm run build`
+### 3. A(2, 3) dan B(5, 3) [Algoritma Dasar]
+![Nomor 3 Tabel](https://github.com/user-attachments/assets/218b8727-1c76-4720-82eb-e33b62b9dc4a)
+![Nomor 3 Canvas](https://github.com/user-attachments/assets/c8890ccb-e166-4e3b-a4a9-f2893d96fe85)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 4. A(2, 3) dan B(2, 5) [Algoritma DDA]
+![Nomor 4 Tabel](https://github.com/user-attachments/assets/b6e53867-c12c-4f70-984d-2dab866576fc)
+![Nomor 4 Canvas](https://github.com/user-attachments/assets/15b13c0a-fd6b-4b26-951a-1271670567ad)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 5. A(6, 4) dan B(2, 1) [Algoritma DDA]
+![Nomor 5 Tabel](https://github.com/user-attachments/assets/dc63b124-b4f0-482d-8775-d365ccdf10dc)
+![Nomor 5 Canvas](https://github.com/user-attachments/assets/01d819c2-f932-4aed-8517-00a3f5b3710b)

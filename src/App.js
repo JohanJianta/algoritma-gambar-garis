@@ -36,6 +36,12 @@ const columnsDDA = [
   { id: "xy", label: "Round(X), Round(Y)" },
 ];
 
+const columnsBressenham = [
+  { id: "k", label: "K" },
+  { id: "pk", label: "PK" },
+  { id: "xy", label: "(XK+1, YK+1)" },
+];
+
 function App() {
   // State for each input field
   const [x1Str, setX1] = useState("");
@@ -76,6 +82,15 @@ function App() {
     } else if (alignment === "dda") {
       setColumns(columnsDDA);
       setRows(generateDDA(x1, y1, x2, y2));
+    } else if (alignment === "bressenham") {
+      setColumns(columnsBressenham);
+
+      // Set smallest x value as first
+      if (x1 < x2) {
+        setRows(generateBressenham(x1, y1, x2, y2));
+      } else {
+        setRows(generateBressenham(x2, y2, x1, y1));
+      }
     } else {
       handleClear();
       setAlignment("dasar");
@@ -92,9 +107,9 @@ function App() {
     const m = (y2 - y1) / (x2 - x1);
 
     const newRows = [];
-    newRows.push({ x1, dx: "", x2: x1, y1, m: "", y2: y1 }); // initial values
+    newRows.push({ x1, dx: "", x2: x1, y1, m: "", y2: y1 }); // Initial value
 
-    // Random logic goes brrr~
+    // Basic algorithm
     if (x1 < x2) {
       for (let i = x1, j = y1; i < x2; i++, j += m) {
         newRows.push({ x1: i, dx: 1, x2: i + 1, y1: j, m, y2: j + m });
@@ -126,12 +141,45 @@ function App() {
     const yInc = dy / step;
 
     const newRows = [];
+    // DDA Algorithm
     for (let k = 0, x = x1, y = y1; k <= step; k++, x += xInc, y += yInc) {
       newRows.push({
         k,
         x,
         y,
         xy: `(${Math.round(x)}, ${Math.round(y)})`,
+      });
+    }
+
+    return newRows;
+  };
+
+  const generateBressenham = (x1, y1, x2, y2) => {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const p0 = 2 * dy - dx;
+
+    const newRows = [];
+    newRows.push({
+      k: "",
+      pk: "",
+      xy: `(${x1}, ${y1})`,
+    }); // Initial value
+
+    // Bressenham algorithm
+    for (let k = 0, pk = p0, x = x1, y = y1; x !== x2; k++) {
+      if (pk < 0) {
+        x = x + 1;
+        pk = pk + 2 * dy;
+      } else {
+        x = x + 1;
+        y = y + 1;
+        pk = pk + 2 * dy - 2 * dx;
+      }
+      newRows.push({
+        k,
+        pk,
+        xy: `(${x}, ${y})`,
       });
     }
 
@@ -174,7 +222,6 @@ function App() {
         minY = Infinity,
         maxY = -Infinity;
 
-      // Determine if the current algorithm is "dda" or "dasar"
       if (alignmentRef.current === "dda") {
         rows.forEach((row) => {
           const x = Math.round(row.x);
@@ -189,17 +236,24 @@ function App() {
         rows.forEach((row) => {
           const { x1, y1, x2, y2 } = row;
 
-          if (
-            x1 !== undefined &&
-            y1 !== undefined &&
-            x2 !== undefined &&
-            y2 !== undefined
-          ) {
-            minX = Math.min(minX, x1, x2);
-            maxX = Math.max(maxX, x1, x2);
-            minY = Math.min(minY, y1, y2);
-            maxY = Math.max(maxY, y1, y2);
-          }
+          minX = Math.min(minX, x1, x2);
+          maxX = Math.max(maxX, x1, x2);
+          minY = Math.min(minY, y1, y2);
+          maxY = Math.max(maxY, y1, y2);
+        });
+      } else if (alignmentRef.current === "bressenham") {
+        rows.forEach((row) => {
+          // Remove parentheses and split the string by the comma
+          const values = row.xy.replace(/[()]/g, "").split(",");
+
+          // Convert the string values to integers
+          const x = parseInt(values[0]);
+          const y = parseInt(values[1]);
+
+          minX = Math.min(minX, x);
+          maxX = Math.max(maxX, x);
+          minY = Math.min(minY, y);
+          maxY = Math.max(maxY, y);
         });
       }
 
@@ -287,29 +341,43 @@ function App() {
         rows.forEach((row) => {
           const { x1, y1, x2, y2 } = row;
 
-          if (
-            x1 !== undefined &&
-            y1 !== undefined &&
-            x2 !== undefined &&
-            y2 !== undefined
-          ) {
-            // Draw the line
+          // Draw the line
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
+
+          // Draw the points at (x1, y1) and (x2, y2)
+          ctx.beginPath();
+          ctx.arc(x1, y1, 4 / scale, 0, Math.PI * 2, true);
+          ctx.fillStyle = "red";
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(x2, y2, 4 / scale, 0, Math.PI * 2, true);
+          ctx.fillStyle = "red";
+          ctx.fill();
+        });
+      } else if (alignmentRef.current === "bressenham") {
+        let prevX, prevY;
+        rows.forEach((row, index) => {
+          const [x, y] = row.xy.replace(/[()]/g, "").split(",").map(Number);
+
+          if (index > 0) {
             ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
+            ctx.moveTo(prevX, prevY);
+            ctx.lineTo(x, y);
             ctx.stroke();
-
-            // Draw the points at (x1, y1) and (x2, y2)
-            ctx.beginPath();
-            ctx.arc(x1, y1, 4 / scale, 0, Math.PI * 2, true);
-            ctx.fillStyle = "red";
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.arc(x2, y2, 4 / scale, 0, Math.PI * 2, true);
-            ctx.fillStyle = "red";
-            ctx.fill();
           }
+
+          prevX = x;
+          prevY = y;
+
+          // Draw the point at (x, y)
+          ctx.beginPath();
+          ctx.arc(x, y, 4 / scale, 0, Math.PI * 2, true);
+          ctx.fillStyle = "red";
+          ctx.fill();
         });
       }
 
@@ -334,6 +402,15 @@ function App() {
 
           lastX = lastRow.x2;
           lastY = lastRow.y2;
+        } else if (alignmentRef.current === "bressenham") {
+          [firstX, firstY] = firstRow.xy
+            .replace(/[()]/g, "")
+            .split(",")
+            .map(Number);
+          [lastX, lastY] = lastRow.xy
+            .replace(/[()]/g, "")
+            .split(",")
+            .map(Number);
         }
 
         // Set font style and color for labels
@@ -420,6 +497,7 @@ function App() {
             >
               <ToggleButton value="dasar">Dasar</ToggleButton>
               <ToggleButton value="dda">DDA</ToggleButton>
+              <ToggleButton value="bressenham">Bressenham</ToggleButton>
             </ToggleButtonGroup>
           </Box>
         </Box>

@@ -37,8 +37,3 @@
     transform: rotate(360deg);
   }
 }
-
-canvas {
-  width: 75%;
-  height: calc(200px + 20vw);
-}
